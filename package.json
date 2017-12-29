@@ -1,0 +1,20 @@
+{
+  "name": "get-component-async",
+  "version": "1.0.0",
+  "description": "load component async in react router",
+  "main": "index.js",
+  "author": "gwuhaolin",
+  "license": "ISC",
+  "scripts": {
+    "build": "tsc"
+  },
+  "typings": "index",
+  "dependencies": {
+    "@types/react": "*",
+    "react": "*",
+    "tslib": "*"
+  },
+  "devDependencies": {
+    "typescript": "^2.6.2"
+  }
+}
