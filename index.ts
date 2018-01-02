@@ -1,4 +1,8 @@
-import {Component, createElement} from 'react';
+import {Component, createElement, ReactElement} from 'react';
+
+interface IState {
+    instance?: ReactElement<any>
+}
 
 /**
  * 异步加载组件
@@ -8,12 +12,12 @@ import {Component, createElement} from 'react';
 export default function getComponentAsync<T>(load: () => Promise<{
     default: T
 }>) {
-    return class AsyncComponent extends Component<{}, {
-        component?: T
-    }> {
+    return class AsyncComponent extends Component<{}, IState> {
 
-        shouldComponentUpdate() {
-            return false;
+        state: IState = {};
+
+        shouldComponentUpdate(_: any, nextState: IState) {
+            return this.state.instance !== nextState.instance;
         }
 
         componentDidMount() {
@@ -21,20 +25,13 @@ export default function getComponentAsync<T>(load: () => Promise<{
             load().then(({default: component}) => {
                 // 代码加载成功，获取到了代码导出的值，调用 setState 通知高阶组件重新渲染子组件
                 this.setState({
-                    component,
-                }, () => {
-                    this.forceUpdate();
+                    instance: createElement(component as any),
                 })
             });
         }
 
         render() {
-            const {component = null} = this.state || {};
-            if (component) {
-                // component 是 React.Component 类型，需要通过 React.createElement 生产一个组件实例
-                return createElement(component as any);
-            }
-            return null;
+            return this.state.instance || null;
         }
     }
 }

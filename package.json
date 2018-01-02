@@ -1,7 +1,15 @@
 {
   "name": "get-component-async",
-  "version": "1.0.0",
-  "description": "load component async in react router",
+  "version": "1.0.1",
+  "description": "load component async for react router",
+  "keywords": [
+    "react",
+    "router",
+    "component",
+    "async",
+    "load",
+    "webpack"
+  ],
   "main": "index.js",
   "author": "gwuhaolin",
   "license": "ISC",
