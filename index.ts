@@ -1,4 +1,4 @@
-import {Component, createElement, ReactElement} from 'react';
+import {Component, createElement, ReactElement, ReactNode} from 'react';
 
 interface IState {
     instance?: ReactElement<any>
@@ -7,11 +7,12 @@ interface IState {
 /**
  * 异步加载组件
  * @param load 组件加载函数，load 函数会返回一个 Promise，在文件加载完成时 resolve
+ * @param loading 在对应的源码的异步代码没有加载到前，临时暂时的loading
  * @returns {AsyncComponent} 返回一个高阶组件用于封装需要异步加载的组件
  */
 export default function getComponentAsync<T>(load: () => Promise<{
     default: T
-}>) {
+}>, loading?: ReactNode) {
     return class AsyncComponent extends Component<{}, IState> {
 
         state: IState = {};
@@ -31,7 +32,7 @@ export default function getComponentAsync<T>(load: () => Promise<{
         }
 
         render() {
-            return this.state.instance || null;
+            return this.state.instance || loading;
         }
     }
 }
