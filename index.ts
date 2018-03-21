@@ -4,6 +4,16 @@ interface IState {
     instance?: ReactElement<any>
 }
 
+let defaultLoading: ReactNode;
+
+/**
+ * 统一设置默认的 loading
+ * @param {React.ReactNode} loading
+ */
+export function setDefaultLoading(loading: ReactNode) {
+    defaultLoading = loading;
+}
+
 /**
  * 异步加载组件
  * @param load 组件加载函数，load 函数会返回一个 Promise，在文件加载完成时 resolve
@@ -32,7 +42,7 @@ export default function getComponentAsync<T>(load: () => Promise<{
         }
 
         render() {
-            return this.state.instance || loading;
+            return this.state.instance || loading || defaultLoading;
         }
     }
 }

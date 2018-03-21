@@ -1,6 +1,6 @@
 {
   "name": "get-component-async",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "load component async for react router",
   "keywords": [
     "react",
