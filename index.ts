@@ -4,7 +4,7 @@ interface IState {
     instance?: ReactElement<any>
 }
 
-let defaultLoading: ReactNode;
+let defaultLoading: ReactNode = null;
 
 /**
  * 统一设置默认的 loading
