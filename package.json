@@ -1,6 +1,6 @@
 {
   "name": "get-component-async",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "load component async for react router",
   "keywords": [
     "react",
@@ -14,7 +14,7 @@
   "author": "gwuhaolin",
   "license": "ISC",
   "scripts": {
-    "build": "tsc"
+    "prepublishOnly": "tsc"
   },
   "typings": "index",
   "dependencies": {
