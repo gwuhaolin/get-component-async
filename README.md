@@ -54,7 +54,7 @@ import { getElementAsync } from "get-component-async";
 
 <div>
   ...others
-  {getElementAsync(() => import("./bigComponent"), <Loading />)}
+  {getElementAsync(() => import("./bigComponent"), <Loading />, props)}
 </div>;
 ```
 

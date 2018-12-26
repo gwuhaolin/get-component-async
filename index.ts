@@ -1,4 +1,11 @@
-import { Component, createElement, ReactElement, ReactNode } from "react";
+import {
+  Component,
+  ComponentClass,
+  createElement,
+  ReactElement,
+  ReactNode,
+  SFC
+} from "react";
 
 interface IState {
   instance?: ReactElement<any>;
@@ -18,13 +25,15 @@ export function setDefaultLoading(loading: ReactNode) {
  * 异步加载组件
  * @param load 组件加载函数，load 函数会返回一个 Promise，在文件加载完成时 resolve
  * @param loading 在对应的源码的异步代码没有加载到前，临时暂时的loading
+ * @param props 传给组件的属性
  * @returns {AsyncComponent} 返回一个高阶组件用于封装需要异步加载的组件
  */
-export default function getComponentAsync<T>(
+export default function getComponentAsync<Props>(
   load: () => Promise<{
-    default: T;
+    default: ComponentClass<Props> | SFC<Props>;
   }>,
-  loading?: ReactNode
+  loading?: ReactNode,
+  props?: Props
 ) {
   return class AsyncComponent extends Component<{}, IState> {
     state: IState = {};
@@ -38,7 +47,7 @@ export default function getComponentAsync<T>(
       load().then(({ default: component }) => {
         // 代码加载成功，获取到了代码导出的值，调用 setState 通知高阶组件重新渲染子组件
         this.setState({
-          instance: createElement(component as any)
+          instance: createElement(component, props)
         });
       });
     }
@@ -49,11 +58,12 @@ export default function getComponentAsync<T>(
   };
 }
 
-export function getElementAsync<T>(
+export function getElementAsync<Props>(
   load: () => Promise<{
-    default: T;
+    default: ComponentClass<Props> | SFC<Props>;
   }>,
-  loading?: ReactNode
+  loading?: ReactNode,
+  props?: Props
 ) {
-  return createElement(getComponentAsync(load, loading));
+  return createElement(getComponentAsync(load, loading, props));
 }
